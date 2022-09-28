@@ -8,19 +8,22 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
-@Table(indexes = @Index(name = "city_index", columnList = "cityOfLiving"))
-public class Persons {
+public class Customers {
 
     @Id
-    private Metrics id;
-
-    @Column(nullable = false, length = 11)
-    private String phoneNumber;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(nullable = false)
-    private String cityOfLiving;
+    private String name;
+
+    @Column(nullable = false)
+    private String surName;
+
+    @Column(length = 11, nullable = false)
+    private String phoneNumber;
 }
