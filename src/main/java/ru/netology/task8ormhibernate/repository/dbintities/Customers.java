@@ -22,7 +22,7 @@ public class Customers {
     private String name;
 
     @Column(nullable = false)
-    private String surName;
+    private String surname;
 
     @Column(length = 11, nullable = false)
     private String phoneNumber;

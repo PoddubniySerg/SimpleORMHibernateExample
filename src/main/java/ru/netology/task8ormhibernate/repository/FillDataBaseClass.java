@@ -36,7 +36,7 @@ public class FillDataBaseClass implements CommandLineRunner {
         IntStream.range(0, 100).forEach(i -> {
             final var customer = Customers.builder()
                     .name(names.get(random.nextInt(names.size())))
-                    .surName(surnames.get(random.nextInt(surnames.size())))
+                    .surname(surnames.get(random.nextInt(surnames.size())))
                     .phoneNumber("XXXXXXXXXXX")
                     .build();
             entityManager.merge(customer);
