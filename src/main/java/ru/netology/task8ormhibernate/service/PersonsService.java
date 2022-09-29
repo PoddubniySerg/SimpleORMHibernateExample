@@ -1,20 +1,21 @@
 package ru.netology.task8ormhibernate.service;
 
 import org.springframework.stereotype.Service;
+import ru.netology.task8ormhibernate.model.Person;
 import ru.netology.task8ormhibernate.repository.IRepository;
 
 import java.util.List;
 
 @Service
-public class ProductService {
+public class PersonsService {
 
     private final IRepository repository;
 
-    public ProductService(IRepository repository) {
+    public PersonsService(IRepository repository) {
         this.repository = repository;
     }
 
-    public List<String> getProductName(String name) {
-        return repository.getProductName(name);
+    public List<Person> getPersonsByCity(String city) {
+        return repository.getPersonsByCity(city);
     }
 }

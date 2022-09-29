@@ -1,9 +1,10 @@
 package ru.netology.task8ormhibernate.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import ru.netology.task8ormhibernate.exception.NotFoundPersonException;
+import ru.netology.task8ormhibernate.model.Person;
 
 import java.util.List;
 
@@ -14,15 +15,19 @@ public class DBRepository implements IRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<String> getProductName(String name) {
+    public List<Person> getPersonsByCity(String city) {
         final var query
                 = entityManager.createQuery(
-                "select o.productName from Orders o join Customers c on o.customer.id = c.id  where c.name = :name",
-                String.class
+                "select new ru.netology.task8ormhibernate.model.Person(" +
+                        "p.id.name, p.id.surname, p.id.age, p.phoneNumber, p.cityOfLiving) " +
+                        "from Persons p " +
+                        "where p.cityOfLiving = :city " +
+                        "order by p.id.name, p.id.surname, p.id.age",
+                Person.class
         );
-        query.setParameter("name", name);
+        query.setParameter("city", city);
         final var persons = query.getResultList();
-        if (persons.isEmpty()) throw new NotFoundPersonException("City not found");
+        if (persons.isEmpty()) throw new EntityNotFoundException("City not found");
         return persons;
     }
 }
