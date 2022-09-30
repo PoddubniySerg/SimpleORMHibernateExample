@@ -1,4 +1,4 @@
-package ru.netology.task8ormhibernate.repository.dbintities;
+package ru.netology.task8ormhibernate.repository.dbentities;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
