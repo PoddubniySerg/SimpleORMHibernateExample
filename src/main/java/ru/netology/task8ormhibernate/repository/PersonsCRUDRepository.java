@@ -2,6 +2,8 @@ package ru.netology.task8ormhibernate.repository;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.netology.task8ormhibernate.repository.dbentities.Metrics;
 import ru.netology.task8ormhibernate.repository.dbentities.Persons;
@@ -12,9 +14,12 @@ import java.util.Optional;
 @Repository
 public interface PersonsCRUDRepository extends JpaRepository<Persons, Metrics> {
 
-    List<Persons> findByCityOfLiving(String cityOfLiving, Sort sort);
+    @Query("select p from Persons p where p.cityOfLiving = ?1")
+    List<Persons> getByCity(String city, Sort sort);
 
-    List<Persons> findByIdAgeLessThanOrderByIdAge(int age, Sort sort);
+    @Query("select p from Persons p where p.id.age < :age")
+    List<Persons> getLessAge(@Param("age") int age, Sort sort);
 
+    @Query(value = "select * from persons where name = ?1 and surname = ?2 limit 1", nativeQuery = true)
     Optional<Persons> findFirst1ByIdNameAndIdSurname(String name, String surname);
 }

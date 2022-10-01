@@ -1,6 +1,5 @@
 package ru.netology.task8ormhibernate.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PersonsService {
 
-    private final Sort sort = Sort.by("id_surname", "id_name", "id_age");
+    private final Sort sort = Sort.by("id.surname", "id.name", "id.age");
 
     private final PersonsCRUDRepository repository;
 
@@ -68,12 +67,12 @@ public class PersonsService {
 
     public List<Person> getPersonsByCity(String city) {
         return convertEntitiesToPersonList(
-                repository.findByCityOfLiving(city, sort), "Persons from " + city + " not found");
+                repository.getByCity(city, sort), "Persons from " + city + " not found");
     }
 
     public List<Person> getPersonsYoungerThan(int age) {
         return convertEntitiesToPersonList(
-                repository.findByIdAgeLessThanOrderByIdAge(age, sort),
+                repository.getLessAge(age, sort),
                 "Persons younger than " + age + " not found"
         );
     }
