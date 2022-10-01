@@ -1,13 +1,13 @@
-package ru.netology.task8ormhibernate.service;
+package ru.netology.task8ormhibernate.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.netology.task8ormhibernate.exception.NotFoundException;
+import ru.netology.task8ormhibernate.exceptions.NotFoundException;
 import ru.netology.task8ormhibernate.model.Person;
-import ru.netology.task8ormhibernate.repository.PersonsCRUDRepository;
-import ru.netology.task8ormhibernate.repository.dbentities.Metrics;
-import ru.netology.task8ormhibernate.repository.dbentities.Persons;
+import ru.netology.task8ormhibernate.repositories.PersonsCRUDRepository;
+import ru.netology.task8ormhibernate.repositories.dbentities.Metrics;
+import ru.netology.task8ormhibernate.repositories.dbentities.Persons;
 
 import java.util.List;
 

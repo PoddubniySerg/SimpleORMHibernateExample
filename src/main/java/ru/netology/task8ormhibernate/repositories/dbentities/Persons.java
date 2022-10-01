@@ -1,4 +1,4 @@
-package ru.netology.task8ormhibernate.repository.dbentities;
+package ru.netology.task8ormhibernate.repositories.dbentities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

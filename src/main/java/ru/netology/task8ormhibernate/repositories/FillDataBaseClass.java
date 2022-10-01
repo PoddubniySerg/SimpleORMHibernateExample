@@ -1,11 +1,11 @@
-package ru.netology.task8ormhibernate.repository;
+package ru.netology.task8ormhibernate.repositories;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import ru.netology.task8ormhibernate.repository.dbentities.Metrics;
-import ru.netology.task8ormhibernate.repository.dbentities.Persons;
+import ru.netology.task8ormhibernate.repositories.dbentities.Metrics;
+import ru.netology.task8ormhibernate.repositories.dbentities.Persons;
 
 import java.util.List;
 import java.util.Random;

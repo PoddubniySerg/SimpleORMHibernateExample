@@ -119,3 +119,7 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:8080/persons/all
+
+###
+
+GET http://localhost:8080/login?name=user&password=upass

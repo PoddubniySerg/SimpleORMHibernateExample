@@ -1,8 +1,8 @@
-package ru.netology.task8ormhibernate.controller;
+package ru.netology.task8ormhibernate.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import ru.netology.task8ormhibernate.model.Person;
-import ru.netology.task8ormhibernate.service.PersonsService;
+import ru.netology.task8ormhibernate.services.PersonsService;
 
 import java.util.List;
 

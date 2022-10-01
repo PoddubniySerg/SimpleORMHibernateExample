@@ -1,4 +1,4 @@
-package ru.netology.task8ormhibernate.exception;
+package ru.netology.task8ormhibernate.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
