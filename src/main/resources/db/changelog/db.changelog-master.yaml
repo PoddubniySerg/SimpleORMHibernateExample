@@ -2,3 +2,6 @@ databaseChangeLog:
   - include:
       file: 2022/09/29-01-changelog.xml
       relativeToChangelogFile: true
+  - include:
+      file: 2022/10/07-01-changelog.xml
+      relativeToChangelogFile: true

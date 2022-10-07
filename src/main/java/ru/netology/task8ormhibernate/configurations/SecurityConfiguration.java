@@ -2,43 +2,65 @@ package ru.netology.task8ormhibernate.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
+
+    private final DataSource dataSource;
+
+    public SecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        final var user = User.withUsername("user")
-                .password("{noop}upass")
-                .authorities("user")
+        final var jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+        final var guest = User.withUsername("guest")
+                .password(encoder().encode("gpass"))
+                .roles("READ")
+                .build();
+        final var operator = User.withUsername("operator")
+                .password(encoder().encode("opass"))
+                .roles("WRITE")
                 .build();
         final var admin = User.withUsername("admin")
-                .password("{noop}apass")
-                .authorities("admin", "user")
+                .password(encoder().encode("apass"))
+                .roles("READ", "WRITE", "DELETE")
                 .build();
-        return new InMemoryUserDetailsManager(user, admin);
+        if (!jdbcUserDetailsManager.userExists(guest.getUsername())) jdbcUserDetailsManager.createUser(guest);
+        if (!jdbcUserDetailsManager.userExists(operator.getUsername())) jdbcUserDetailsManager.createUser(operator);
+        if (!jdbcUserDetailsManager.userExists(admin.getUsername())) jdbcUserDetailsManager.createUser(admin);
+        return jdbcUserDetailsManager;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.formLogin().and()
-                .authorizeRequests().antMatchers(HttpMethod.GET, "/persons/all").permitAll()
-                .and()
-                .authorizeRequests().antMatchers(HttpMethod.GET, "/persons/save").hasAuthority("admin")
-                .and()
-                .authorizeRequests().antMatchers(HttpMethod.POST).hasAuthority("admin")
-                .and()
-                .authorizeRequests().antMatchers(HttpMethod.DELETE).hasAuthority("admin")
-                .and()
-                .authorizeRequests().anyRequest().authenticated();
-        return http.build();
-    }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.formLogin().and()
+//                .authorizeRequests().antMatchers(HttpMethod.GET, "/persons/all").permitAll()
+//                .and()
+//                .authorizeRequests().antMatchers(HttpMethod.GET, "/persons/save").hasAuthority("admin")
+//                .and()
+//                .authorizeRequests().antMatchers(HttpMethod.POST).hasAuthority("admin")
+//                .and()
+//                .authorizeRequests().antMatchers(HttpMethod.DELETE).hasAuthority("admin")
+//                .and()
+//                .authorizeRequests().anyRequest().authenticated();
+//        return http.build();
+//    }
 }
