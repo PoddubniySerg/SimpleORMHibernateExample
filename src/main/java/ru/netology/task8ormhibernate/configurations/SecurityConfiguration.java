@@ -48,19 +48,4 @@ public class SecurityConfiguration {
         if (!jdbcUserDetailsManager.userExists(admin.getUsername())) jdbcUserDetailsManager.createUser(admin);
         return jdbcUserDetailsManager;
     }
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.formLogin().and()
-//                .authorizeRequests().antMatchers(HttpMethod.GET, "/persons/all").permitAll()
-//                .and()
-//                .authorizeRequests().antMatchers(HttpMethod.GET, "/persons/save").hasAuthority("admin")
-//                .and()
-//                .authorizeRequests().antMatchers(HttpMethod.POST).hasAuthority("admin")
-//                .and()
-//                .authorizeRequests().antMatchers(HttpMethod.DELETE).hasAuthority("admin")
-//                .and()
-//                .authorizeRequests().anyRequest().authenticated();
-//        return http.build();
-//    }
 }
